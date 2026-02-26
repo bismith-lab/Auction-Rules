@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="How India's 2015 mining law created a permanent three-tier cost hierarchy in the steel industry — and why LMEL holds the golden ticket until 2057.">
+<title>India Steel · The Mining Cost Hierarchy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────
+   TOKENS — full light palette
+───────────────────────────────────────── */
+:root {
+  --bg:        #faf8f4;
+  --bg2:       #f0ece3;
+  --bg3:       #e8e2d6;
+  --white:     #ffffff;
+  --ink:       #1c1a14;
+  --ink2:      #3e3b31;
+  --muted:     #7a7567;
+  --border:    #d8d2c4;
+
+  /* amber/ochre — primary accent */
+  --gold:      #9a6b1e;
+  --gold-dk:   #7a5215;
+  --gold-lt:   #c49040;
+  --gold-bg:   #fdf3e0;
+  --gold-border: #e8c87a;
+
+  /* forest green — Tier 1 / LMEL */
+  --green:     #2a5e42;
+  --green-lt:  #3d8a60;
+  --green-bg:  #eaf4ee;
+  --green-border: #a8d5ba;
+
+  /* slate blue — Tier 2 / PSU */
+  --blue:      #1e3f7a;
+  --blue-lt:   #3464b0;
+  --blue-bg:   #eaeffa;
+  --blue-border: #a0b8e8;
+
+  /* crimson — Tier 3 / Private */
+  --red:       #7d1f1f;
+  --red-lt:    #b83232;
+  --red-bg:    #faebeb;
+  --red-border: #e0aaaa;
+
+  --serif:     'Lora', Georgia, serif;
+  --sans:      'Outfit', sans-serif;
+  --mono:      'JetBrains Mono', monospace;
+
+  --max:       1100px;
+  --r:         8px;
+}
+
+/* ─────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+a { color: var(--gold); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+strong { font-weight: 600; }
+
+/* ─────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────── */
+.container { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+.mono { font-family: var(--mono); }
+.sans { font-family: var(--sans); }
+
+.tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,248,244,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+}
+nav .inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-brand {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); text-decoration: none; }
+
+@media (max-width: 640px) { .nav-links { display: none; } }
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: 120px 0 100px;
+  overflow: hidden;
+}
+
+/* large decorative rule lines */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent calc(25% - 0.5px),
+      rgba(168,118,42,0.06) calc(25% - 0.5px),
+      rgba(168,118,42,0.06) 25%
+    );
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-eyebrow::before { content: ''; display: inline-block; width: 32px; height: 1px; background: var(--gold); }
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(52px, 8vw, 104px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 32px;
+  max-width: 820px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-lead {
+  font-size: 21px;
+  color: var(--ink2);
+  max-width: 620px;
+  line-height: 1.65;
+  margin-bottom: 48px;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.hero-meta-item .label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hero-meta-item .value {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+}
+
+/* big decorative number */
+.hero-bg-num {
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--serif);
+  font-size: clamp(160px, 22vw, 320px);
+  font-weight: 700;
+  color: rgba(154,107,30,0.06);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -0.05em;
+}
+
+/* ─────────────────────────────────────────
+   INTRO BAND — light version
+───────────────────────────────────────── */
+.intro-band {
+  background: var(--bg2);
+  color: var(--ink);
+  padding: 72px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.intro-band .inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+@media (max-width: 720px) { .intro-band .inner { grid-template-columns: 1fr; gap: 32px; } }
+
+.intro-band h2 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.intro-band h2 em { font-style: italic; color: var(--gold); }
+.intro-band p {
+  font-size: 16px;
+  color: var(--ink2);
+  line-height: 1.75;
+}
+.intro-band p + p { margin-top: 16px; }
+
+.intro-stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.intro-stat {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 28px 24px;
+  border-radius: 4px;
+}
+.intro-stat .s-val {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.intro-stat .s-lab {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ─────────────────────────────────────────
+   SECTION WRAPPER
+───────────────────────────────────────── */
+.section { padding: 96px 0; }
+.section + .section { border-top: 1px solid var(--border); }
+.section-alt { background: var(--bg2); }
+
+.section h2 {
+  font-family: var(--serif);
+  font-size: clamp(34px, 4vw, 56px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.section h2 em { font-style: italic; color: var(--gold); }
+
+.section p {
+  font-size: 17px;
+  color: var(--ink2);
+  line-height: 1.75;
+  max-width: 680px;
+}
+.section p + p { margin-top: 16px; }
+
+/* ─────────────────────────────────────────
+   TWO PATHS
+───────────────────────────────────────── */
+.paths-intro { margin-bottom: 56px; }
+
+.paths-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 700px) { .paths-grid { grid-template-columns: 1fr; } }
+
+.path-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.3s;
+}
+.path-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+
+.path-card-top {
+  padding: 32px 32px 0;
+  border-top: 4px solid currentColor;
+}
+.path-card.private { --c: var(--red); color: var(--red); }
+.path-card.psu     { --c: var(--blue); color: var(--blue); }
+.path-card-top .tag { color: var(--c); border-color: var(--c); background: rgba(var(--c-rgb,0,0,0),0.05); margin-bottom: 20px; }
+
+.path-card h3 {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+.path-card > p {
+  padding: 0 32px;
+  font-size: 15.5px;
+  color: var(--muted);
+  margin-bottom: 20px;
+  line-height: 1.65;
+  max-width: none;
+}
+
+.formula-box {
+  margin: 0 32px 32px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 2;
+  color: var(--ink2);
+}
+.formula-box .flabel {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+.formula-box .hl-red  { color: var(--red); font-weight: 500; }
+.formula-box .hl-blue { color: var(--blue); font-weight: 500; }
+
+.bid-callout {
+  background: var(--red-bg);
+  border: 1px solid var(--red-border);
+  margin: 0 32px 32px;
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.bid-callout .bval {
+  font-family: var(--serif);
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--red);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.bid-callout .btext {
+  font-size: 13.5px;
+  color: var(--ink2);
+  line-height: 1.55;
+}
+.bid-callout .btext strong { color: var(--red); }
+
+/* ─────────────────────────────────────────
+   COST HIERARCHY TIERS
+───────────────────────────────────────── */
+.tiers-intro { margin-bottom: 56px; }
+
+.tier-card {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: var(--white);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.tier-card:hover {
+  box-shadow: 0 16px 48px rgba(0,0,0,0.09);
+  transform: translateY(-2px);
+}
+
+.tier-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 12px;
+  text-align: center;
+}
+.tier-badge .rank {
+  font-family: var(--serif);
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1;
+}
+.tier-badge .rank-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  opacity: 0.7;
+}
+
+.tier-card.t3 .tier-badge { background: var(--red-bg);   color: var(--red);   border-right: 3px solid var(--red); }
+.tier-card.t2 .tier-badge { background: var(--blue-bg);  color: var(--blue);  border-right: 3px solid var(--blue); }
+.tier-card.t1 .tier-badge { background: var(--green-bg); color: var(--green); border-right: 3px solid var(--green); }
+
+.tier-body { padding: 28px 32px; }
+
+.tier-body-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.tier-body-top h3 {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.tier-body-top .companies {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 0.06em;
+}
+
+.tier-pct {
+  font-family: var(--serif);
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.tier-card.t3 .tier-pct { color: var(--red); }
+.tier-card.t2 .tier-pct { color: var(--blue); }
+.tier-card.t1 .tier-pct { color: var(--green); }
+
+/* Cost bar */
+.cost-bar-wrap { margin-bottom: 14px; }
+.cost-bar-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.cost-track {
+  height: 8px;
+  background: var(--bg2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.cost-fill {
+  height: 100%;
+  border-radius: 4px;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cost-fill.animate { transform: scaleX(1); }
+
+.tier-card.t3 .cost-fill { background: linear-gradient(90deg, var(--red), var(--red-lt)); width: 100%; }
+.tier-card.t2 .cost-fill { background: linear-gradient(90deg, var(--blue), var(--blue-lt)); width: 27%; }
+.tier-card.t1 .cost-fill { background: linear-gradient(90deg, var(--green), var(--green-lt)); width: 13%; }
+
+.tier-desc {
+  font-size: 15px;
+  color: var(--ink2);
+  line-height: 1.7;
+}
+
+.golden-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  background: linear-gradient(90deg, var(--gold-bg), var(--bg));
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  padding: 9px 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+}
+.golden-pill::before { content: '★'; font-size: 13px; }
+
+@media (max-width: 640px) {
+  .tier-card { grid-template-columns: 80px 1fr; }
+  .tier-badge .rank { font-size: 48px; }
+  .tier-pct { font-size: 36px; }
+  .tier-body { padding: 20px; }
+}
+
+/* ─────────────────────────────────────────
+   VISUAL COMPARISON — light version
+───────────────────────────────────────── */
+.compare-section { padding: 96px 0; background: var(--bg3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.compare-section .section-label { color: var(--muted); }
+.compare-section .section-label::after { background: var(--border); }
+
+.compare-section h2 {
+  font-family: var(--serif);
+  font-size: clamp(34px, 4vw, 56px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 60px;
+}
+.compare-section h2 em { color: var(--gold); font-style: italic; }
+
+.compare-chart { display: flex; flex-direction: column; gap: 20px; }
+
+.c-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 80px;
+  gap: 16px;
+  align-items: center;
+}
+@media (max-width: 600px) { .c-row { grid-template-columns: 110px 1fr 60px; gap: 10px; } }
+
+.c-label { text-align: right; }
+.c-label .name {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.c-label .sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.c-track {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  height: 40px;
+  overflow: hidden;
+  position: relative;
+}
+.c-fill {
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.c-fill.animate { transform: scaleX(1); }
+.c-fill span {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+}
+
+.row-lmel .c-fill { background: linear-gradient(90deg, var(--green), var(--green-lt)); width: 13%; min-width: 100px; }
+.row-sail .c-fill { background: linear-gradient(90deg, var(--blue), var(--blue-lt)); width: 27%; }
+.row-tata .c-fill { background: linear-gradient(90deg, var(--red), var(--red-lt)); width: 100%; }
+
+.c-pct {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Axis */
+.c-axis {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.c-axis span {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+/* Insight callout */
+.insight-box {
+  margin-top: 56px;
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--r);
+  padding: 32px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px;
+  align-items: center;
+}
+@media (max-width: 640px) { .insight-box { grid-template-columns: 1fr; } }
+.insight-icon {
+  font-family: var(--serif);
+  font-size: 52px;
+  color: var(--gold-lt);
+  line-height: 1;
+}
+.insight-box p {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-style: italic;
+  color: var(--ink2);
+  line-height: 1.65;
+  max-width: none;
+}
+.insight-box p strong { color: var(--gold-dk); font-style: normal; }
+
+/* ─────────────────────────────────────────
+   FORMULA DEEP DIVE  — redesigned
+───────────────────────────────────────── */
+.formula-section { padding: 96px 0; background: var(--white); }
+
+/* Tab switcher */
+.formula-tabs {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-top: 56px;
+  margin-bottom: 0;
+}
+.ftab-btn {
+  flex: 1;
+  padding: 18px 24px;
+  background: var(--bg);
+  border: none;
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+  font-family: var(--serif);
+}
+.ftab-btn:last-child { border-right: none; }
+.ftab-btn:hover { background: var(--bg2); }
+.ftab-btn.active { background: var(--white); }
+.ftab-btn.active.red-tab  { border-top: 3px solid var(--red); }
+.ftab-btn.active.blue-tab { border-top: 3px solid var(--blue); }
+.ftab-btn.active.green-tab{ border-top: 3px solid var(--green); }
+.ftab-btn .tb-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.ftab-btn.red-tab   .tb-label { color: var(--red); }
+.ftab-btn.blue-tab  .tb-label { color: var(--blue); }
+.ftab-btn.green-tab .tb-label { color: var(--green); }
+.ftab-btn .tb-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.ftab-btn .tb-co {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Panel */
+.formula-panel {
+  display: none;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--r) var(--r);
+  overflow: hidden;
+}
+.formula-panel.active { display: block; }
+
+/* Steps inside panel */
+.fsteps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid var(--border);
+}
+.fstep {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--bg2);
+}
+.fstep:last-child { border-bottom: none; }
+
+.fstep-num {
+  flex-shrink: 0;
+  width: 64px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 0 24px;
+}
+.fstep-num span {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.red-tab-panel  .fstep-num span { background: var(--red-bg);   color: var(--red); }
+.blue-tab-panel .fstep-num span { background: var(--blue-bg);  color: var(--blue); }
+.green-tab-panel .fstep-num span { background: var(--green-bg); color: var(--green); }
+
+.fstep-content {
+  flex: 1;
+  padding: 22px 32px 22px 0;
+}
+.fstep-content h4 {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.fstep-content p {
+  font-size: 14.5px;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: none;
+}
+.fstep-content .fstep-tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 3px;
+}
+.red-tag   { background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red-border); }
+.blue-tag  { background: var(--blue-bg);  color: var(--blue);  border: 1px solid var(--blue-border); }
+.green-tag { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+
+/* Result bar at the bottom of each panel */
+.formula-result-bar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 32px 28px 64px;
+  background: var(--bg);
+}
+.formula-result-bar .frb-text {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.75;
+}
+.formula-result-bar .frb-total {
+  text-align: right;
+  flex-shrink: 0;
+}
+.formula-result-bar .frb-total .frb-num {
+  font-family: var(--serif);
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
+}
+.formula-result-bar .frb-total .frb-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.red-tab-panel  .frb-num  { color: var(--red); }
+.red-tab-panel  .frb-text { color: var(--red); }
+.blue-tab-panel .frb-num  { color: var(--blue); }
+.blue-tab-panel .frb-text { color: var(--blue); }
+.green-tab-panel .frb-num { color: var(--green); }
+.green-tab-panel .frb-text { color: var(--green); }
+
+@media (max-width: 640px) {
+  .formula-tabs { flex-direction: column; }
+  .ftab-btn { border-right: none; border-bottom: 1px solid var(--border); }
+  .formula-result-bar { grid-template-columns: 1fr; padding: 20px 20px 20px 64px; }
+  .formula-result-bar .frb-total { text-align: left; }
+  .fstep-content { padding-right: 16px; }
+}
+
+/* ─────────────────────────────────────────
+   TIMELINE
+───────────────────────────────────────── */
+.timeline-section { padding: 96px 0; background: var(--bg2); }
+
+.timeline {
+  position: relative;
+  margin-top: 56px;
+  padding-left: 40px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold), var(--border) 85%, transparent);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 48px;
+  padding-left: 32px;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -35px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  background: var(--bg2);
+  z-index: 1;
+}
+.tl-item.highlight::before {
+  background: var(--gold);
+  width: 16px;
+  height: 16px;
+  left: -37px;
+  top: 4px;
+  box-shadow: 0 0 0 4px rgba(154,107,30,0.15);
+}
+
+.tl-year {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.tl-item h3 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.tl-item p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 580px;
+}
+
+.tl-tag {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+.tl-tag.gold  { background: var(--gold-bg); color: var(--gold); }
+.tl-tag.green { background: var(--green-bg); color: var(--green); }
+.tl-tag.red   { background: var(--red-bg); color: var(--red); }
+
+/* ─────────────────────────────────────────
+   WHO WINS / SUMMARY TABLE
+───────────────────────────────────────── */
+.table-section { padding: 96px 0; }
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 48px;
+  font-size: 15px;
+}
+.summary-table th {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 20px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+.summary-table td {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink2);
+  line-height: 1.5;
+  vertical-align: top;
+}
+.summary-table tr:last-child td { border-bottom: none; }
+.summary-table tr:hover td { background: rgba(154,107,30,0.03); }
+
+.summary-table .co-name {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+.summary-table .co-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  display: block;
+  margin-top: 2px;
+  letter-spacing: 0.06em;
+}
+
+.summary-table .cost-chip {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 3px;
+}
+.cost-chip.green { background: var(--green-bg); color: var(--green); }
+.cost-chip.blue  { background: var(--blue-bg);  color: var(--blue); }
+.cost-chip.red   { background: var(--red-bg);   color: var(--red); }
+
+.summary-table .verdict {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .summary-table th:nth-child(3),
+  .summary-table td:nth-child(3),
+  .summary-table th:nth-child(4),
+  .summary-table td:nth-child(4) { display: none; }
+}
+
+/* ─────────────────────────────────────────
+   CONCLUSION — light version
+───────────────────────────────────────── */
+.conclusion-section {
+  padding: 120px 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.conclusion-section::before {
+  content: '2057';
+  position: absolute;
+  right: -60px;
+  bottom: -80px;
+  font-family: var(--serif);
+  font-size: clamp(160px, 25vw, 380px);
+  font-weight: 700;
+  color: rgba(154,107,30,0.06);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.04em;
+}
+
+.conclusion-section .section-label { color: var(--muted); }
+.conclusion-section .section-label::after { background: var(--border); }
+
+.conclusion-section h2 {
+  font-family: var(--serif);
+  font-size: clamp(38px, 5.5vw, 72px);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 28px;
+  max-width: 800px;
+}
+.conclusion-section h2 em { color: var(--gold); font-style: italic; }
+
+.conclusion-section .lead {
+  font-size: 19px;
+  color: var(--ink2);
+  line-height: 1.7;
+  max-width: 620px;
+  margin-bottom: 56px;
+  font-family: var(--serif);
+}
+
+.final-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 56px;
+}
+@media (max-width: 700px) { .final-stats { grid-template-columns: 1fr 1fr; } }
+
+.final-stat {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 32px 24px;
+}
+.final-stat .fval {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.final-stat.fs-green .fval { color: var(--green); }
+.final-stat.fs-blue  .fval { color: var(--blue); }
+.final-stat.fs-red   .fval { color: var(--red); }
+.final-stat.fs-gold  .fval { color: var(--gold); }
+
+.final-stat .flab {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.conclusion-quote {
+  border-left: 3px solid var(--gold-border);
+  padding: 4px 0 4px 28px;
+  max-width: 700px;
+}
+.conclusion-quote p {
+  font-family: var(--serif);
+  font-size: clamp(18px, 2.2vw, 22px);
+  font-style: italic;
+  color: var(--ink2);
+  line-height: 1.7;
+  max-width: none;
+}
+.conclusion-quote p strong { color: var(--gold-dk); font-style: normal; }
+
+/* ─────────────────────────────────────────
+   FOOTER — light version
+───────────────────────────────────────── */
+footer {
+  background: var(--bg3);
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+}
+footer .inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+footer .f-brand {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+footer .f-note {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* ─────────────────────────────────────────
+   DIVIDERS
+───────────────────────────────────────── */
+hr.fancy {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
+  margin: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <span class="nav-brand">India Steel · Mining Law 2015</span>
+    <ul class="nav-links">
+      <li><a href="#paths">Two Paths</a></li>
+      <li><a href="#hierarchy">Cost Hierarchy</a></li>
+      <li><a href="#comparison">Comparison</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#conclusion">Bottom Line</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container" style="position:relative;">
+    <div class="hero-eyebrow">India Steel Industry · Mining Cost Analysis</div>
+    <h1>The <em>Mining Cost</em><br>Hierarchy</h1>
+    <p class="hero-lead">
+      In 2015, India rewrote its mining laws. What emerged was a permanent, legally-encoded cost hierarchy that separates winners from losers for generations.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="label">Law Enacted</span>
+        <span class="value">MMDR Amendment, 2015</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Sectors Affected</span>
+        <span class="value">Iron Ore · Steel · Mining</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Legacy Advantage Until</span>
+        <span class="value">2057 (LMEL / Surjagarh)</span>
+      </div>
+    </div>
+    <div class="hero-bg-num" aria-hidden="true">₹</div>
+  </div>
+</section>
+
+<!-- INTRO BAND -->
+<div class="intro-band">
+  <div class="container">
+    <div class="inner">
+      <div class="reveal">
+        <h2>One law.<br><em>Three cost tiers.</em><br>Forever.</h2>
+        <p>Before 2015, the government distributed mining leases at its discretion — often for free. The MMDR Amendment of 2015 ended that era overnight. Two entirely different systems now govern how private companies and government PSUs access ore.</p>
+        <p style="margin-top:16px;">The result: a cost structure where a private miner can pay over 150% of the ore's value to the government, while a legacy player pays just 20%. The gap is not temporary. It is structural, legal, and locked in for decades.</p>
+      </div>
+      <div class="intro-stat-grid reveal reveal-delay-2">
+        <div class="intro-stat">
+          <div class="s-val">~20%</div>
+          <div class="s-lab">LMEL's govt. cost<br>per tonne</div>
+        </div>
+        <div class="intro-stat">
+          <div class="s-val">~40%</div>
+          <div class="s-lab">PSU govt. cost<br>per tonne</div>
+        </div>
+        <div class="intro-stat">
+          <div class="s-val">150%+</div>
+          <div class="s-lab">Private auction<br>cost per tonne</div>
+        </div>
+        <div class="intro-stat">
+          <div class="s-val">2057</div>
+          <div class="s-lab">LMEL advantage<br>expiry year</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TWO PATHS -->
+<section class="section" id="paths">
+  <div class="container">
+    <div class="section-label">01 — The Two Acquisition Paths</div>
+    <div class="paths-intro reveal">
+      <h2>After 2015, there are<br><em>only two ways</em> to get a mine.</h2>
+      <p>Private companies and government PSUs operate in completely separate systems — with radically different cost outcomes. Understanding these two paths is the foundation of understanding the entire Indian steel industry's competitive landscape.</p>
+    </div>
+    <div class="paths-grid">
+      <div class="path-card private reveal reveal-delay-1">
+        <div class="path-card-top">
+          <div><span class="tag">Private Companies</span></div>
+          <h3>Competitive<br>Auctions</h3>
+        </div>
+        <p>Tata Steel, JSW Steel, and every private miner must fight for new mines in mandatory electronic auctions. With multi-billion dollar blast furnaces running 24/7, they simply cannot afford to run out of ore — and they bid like it.</p>
+        <div class="formula-box">
+          <span class="flabel">Monthly Government Payment Formula</span>
+          Qty Extracted (tonnes)<br>
+          × Official Market Price (₹/tonne)<br>
+          × <span class="hl-red">Auction Premium % (their winning bid)</span><br>
+          + Standard Royalties &amp; Taxes
+        </div>
+        <div class="bid-callout">
+          <div class="bval">141%</div>
+          <div class="btext">
+            Tata Steel's winning bid at one auction. For every <strong>₹100 worth of ore</strong> in the ground, they agreed to pay the State Government <strong>₹141</strong> — just for the right to dig it up. They mine at a loss to keep the furnaces alive.
+          </div>
+        </div>
+      </div>
+      <div class="path-card psu reveal reveal-delay-2">
+        <div class="path-card-top">
+          <div><span class="tag">Government PSUs</span></div>
+          <h3>Government<br>Reservation</h3>
+        </div>
+        <p>SAIL, NMDC, and other Public Sector Undertakings can bypass the auction process entirely. The government simply "reserves" a mineral block and hands it over directly — no competitive bidding required.</p>
+        <div class="formula-box">
+          <span class="flabel">PSU Leveling Mechanism</span>
+          Base Royalty<br>
+          + <span class="hl-blue">Additional Royalty = 150% of Base Royalty</span><br>
+          ──────────────────────────────<br>
+          Total ≈ <span class="hl-blue">~40% of ore's selling price</span>
+        </div>
+        <div style="margin: 0 32px 32px; padding: 16px 20px; background: var(--blue-bg); border: 1px solid var(--blue-border); border-radius: 4px; font-size: 14px; color: var(--ink2); line-height: 1.6;">
+          <strong>Why the penalty?</strong> If PSUs got mines for free while private companies paid 140%+ premiums, the private sector would collapse. The Additional Royalty is the law's attempt to level the playing field — though it does so imperfectly.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="fancy">
+
+<!-- COST HIERARCHY -->
+<section class="section section-alt" id="hierarchy">
+  <div class="container">
+    <div class="section-label">02 — The Cost Hierarchy</div>
+    <div class="tiers-intro reveal">
+      <h2>Three tiers.<br><em>Permanently encoded</em> by law.</h2>
+      <p>Because of these fragmented rules, the Indian steel industry now operates on three entirely different cost structures. Here is what each player pays the government for every tonne of iron ore extracted — and why the gaps are not going anywhere.</p>
+    </div>
+
+    <!-- Tier 3 -->
+    <div class="tier-card t3 reveal">
+      <div class="tier-badge">
+        <div class="rank">3</div>
+        <div class="rank-label">Costliest</div>
+      </div>
+      <div class="tier-body">
+        <div class="tier-body-top">
+          <div>
+            <h3>New Private Mines</h3>
+            <div class="companies">Tata Steel · JSW Steel · Other Private Bidders</div>
+          </div>
+          <div class="tier-pct">150%+</div>
+        </div>
+        <div class="cost-bar-wrap">
+          <div class="cost-bar-meta">
+            <span>Government cost as % of ore's market value</span>
+            <span>150%+ of market price</span>
+          </div>
+          <div class="cost-track"><div class="cost-fill"></div></div>
+        </div>
+        <p class="tier-desc">Forced into the open market, private giants pay the <strong>base royalty plus their auction premium</strong> — which has routinely exceeded 100% in competitive blocks. Their total government payment frequently exceeds the market value of the ore itself. This is not an inefficiency. It is a deliberate outcome of the auction structure combined with their desperate need for raw material security.</p>
+      </div>
+    </div>
+
+    <!-- Tier 2 -->
+    <div class="tier-card t2 reveal">
+      <div class="tier-badge">
+        <div class="rank">2</div>
+        <div class="rank-label">Mid Tier</div>
+      </div>
+      <div class="tier-body">
+        <div class="tier-body-top">
+          <div>
+            <h3>Government PSUs</h3>
+            <div class="companies">SAIL · NMDC · State-owned Enterprises</div>
+          </div>
+          <div class="tier-pct">~40%</div>
+        </div>
+        <div class="cost-bar-wrap">
+          <div class="cost-bar-meta">
+            <span>Government cost as % of ore's market value</span>
+            <span>~40% of market price</span>
+          </div>
+          <div class="cost-track"><div class="cost-fill"></div></div>
+        </div>
+        <p class="tier-desc">PSUs avoided the auction bloodbath but pay the <strong>mandatory Additional Royalty</strong> (150% of the base statutory royalty). Their total government burden lands at roughly 40% of the ore's selling price — dramatically cheaper than private auction winners, but still twice LMEL's cost.</p>
+      </div>
+    </div>
+
+    <!-- Tier 1 -->
+    <div class="tier-card t1 reveal">
+      <div class="tier-badge">
+        <div class="rank">1</div>
+        <div class="rank-label">Lowest Cost</div>
+      </div>
+      <div class="tier-body">
+        <div class="tier-body-top">
+          <div>
+            <h3>LMEL — The Legacy Miner</h3>
+            <div class="companies">Lloyds Metals &amp; Energy Ltd · Surjagarh Mine, Gadchiroli</div>
+          </div>
+          <div class="tier-pct">~20%</div>
+        </div>
+        <div class="cost-bar-wrap">
+          <div class="cost-bar-meta">
+            <span>Government cost as % of ore's market value</span>
+            <span>~20% of market price</span>
+          </div>
+          <div class="cost-track"><div class="cost-fill"></div></div>
+        </div>
+        <p class="tier-desc">LMEL secured the Surjagarh mine in <strong>2007</strong> — eight years before the auction rules or PSU penalties existed. Their Auction Premium is legally <strong>0%</strong>. They pay only the absolute minimum statutory base royalty, with no Additional Royalty obligation. The 2015 law that reshaped the entire industry simply did not apply retroactively to pre-existing leases.</p>
+        <div class="golden-pill">Grandfathered at ~20% cost until the lease expires in 2057 — a 33-year structural moat</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPARISON CHART -->
+<section class="compare-section" id="comparison">
+  <div class="container">
+    <div class="section-label">03 — Side-by-Side Comparison</div>
+    <h2>What does the government<br>collect per <em>₹100 of ore</em>?</h2>
+
+    <div class="compare-chart">
+      <div class="c-row row-lmel reveal">
+        <div class="c-label">
+          <div class="name">LMEL</div>
+          <div class="sub">Legacy · Pre-2015</div>
+        </div>
+        <div class="c-track">
+          <div class="c-fill"><span>~₹20 per ₹100</span></div>
+        </div>
+        <div class="c-pct" style="color: var(--green-lt);">~20%</div>
+      </div>
+      <div class="c-row row-sail reveal reveal-delay-1">
+        <div class="c-label">
+          <div class="name">SAIL / NMDC</div>
+          <div class="sub">PSU · Reservation</div>
+        </div>
+        <div class="c-track">
+          <div class="c-fill"><span>~₹40 per ₹100</span></div>
+        </div>
+        <div class="c-pct" style="color: var(--blue-lt);">~40%</div>
+      </div>
+      <div class="c-row row-tata reveal reveal-delay-2">
+        <div class="c-label">
+          <div class="name">Tata / JSW</div>
+          <div class="sub">Private · Auction</div>
+        </div>
+        <div class="c-track">
+          <div class="c-fill"><span>₹150+ per ₹100</span></div>
+        </div>
+        <div class="c-pct" style="color: var(--red-lt);">150%+</div>
+      </div>
+      <div class="c-row">
+        <div></div>
+        <div class="c-axis">
+          <span>₹0</span><span>₹50</span><span>₹100</span><span>₹150+</span>
+        </div>
+        <div></div>
+      </div>
+    </div>
+
+    <div class="insight-box reveal">
+      <div class="insight-icon">"</div>
+      <p>LMEL pays approximately <strong>₹20</strong> for every ₹100 of ore it mines. Tata Steel, at a 141% auction premium, pays over <strong>₹150</strong> for the same. That is a cost difference of more than <strong>7× on the single largest input</strong> in steel production — and it is permanent, not cyclical.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULA DEEP DIVE -->
+<section class="formula-section" id="formulas">
+  <div class="container">
+    <div class="section-label">04 — How The Payments Actually Work</div>
+    <div class="reveal">
+      <h2>Breaking down<br><em>each formula</em> step by step.</h2>
+      <p>The complexity of the two-path system makes it easy to lose the plot. Here is exactly how the government's cut is calculated — for each type of player. Select a route below.</p>
+    </div>
+
+    <!-- Tab switcher -->
+    <div class="formula-tabs reveal">
+      <button class="ftab-btn red-tab active" onclick="switchTab('private', this)">
+        <div class="tb-label">Auction Route</div>
+        <div class="tb-name">Private Miners</div>
+        <div class="tb-co">Tata Steel · JSW Steel</div>
+      </button>
+      <button class="ftab-btn blue-tab" onclick="switchTab('psu', this)">
+        <div class="tb-label">Reservation Route</div>
+        <div class="tb-name">Govt. PSUs</div>
+        <div class="tb-co">SAIL · NMDC</div>
+      </button>
+      <button class="ftab-btn green-tab" onclick="switchTab('lmel', this)">
+        <div class="tb-label">Legacy Exception</div>
+        <div class="tb-name">LMEL</div>
+        <div class="tb-co">Surjagarh · Pre-2015</div>
+      </button>
+    </div>
+
+    <!-- Panel: Private -->
+    <div class="formula-panel active red-tab-panel" id="panel-private">
+      <ul class="fsteps">
+        <li class="fstep">
+          <div class="fstep-num"><span>1</span></div>
+          <div class="fstep-content">
+            <h4>Extract ore and report quantity</h4>
+            <p>Every month, the company measures and reports the quantity of iron ore extracted in metric tonnes to the state government. This forms the base of every payment calculation.</p>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>2</span></div>
+          <div class="fstep-content">
+            <h4>Look up the official benchmark price</h4>
+            <p>The Indian Bureau of Mines (IBM) publishes a monthly official market price for iron ore. This benchmark — not the company's actual sale price — is used for all royalty and premium calculations.</p>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>3</span></div>
+          <div class="fstep-content">
+            <h4>Apply the auction premium — the dominant cost</h4>
+            <p>The premium % the company bid during the e-auction is multiplied against quantity × benchmark price. At 141.25%, this single line item dwarfs all other payments combined.</p>
+            <span class="fstep-tag red-tag">Tata Steel bid: 141.25%</span>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>4</span></div>
+          <div class="fstep-content">
+            <h4>Add the statutory base royalty (15%)</h4>
+            <p>All miners — private and PSU alike — pay a base royalty set by the central government. For iron ore it is currently 15% of the IBM benchmark value. This is the floor everyone pays.</p>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>5</span></div>
+          <div class="fstep-content">
+            <h4>Add DMF, NMET, and state cesses</h4>
+            <p>District Mineral Foundation (30% of royalty), National Mineral Exploration Trust (2% of royalty), and any state-specific levies stack on top. Every rupee of base royalty multiplies these contributions too.</p>
+          </div>
+        </li>
+      </ul>
+      <div class="formula-result-bar">
+        <div class="frb-text">
+          Monthly Payment =<br>
+          Qty × IBM Price × <strong>(141.25% premium + 15% royalty + ~3.8% levies)</strong><br>
+          ≈ <strong>~156–160% of ore's market value</strong> paid to government per tonne
+        </div>
+        <div class="frb-total">
+          <div class="frb-num">~156%</div>
+          <div class="frb-label">Total govt. take<br>(per ₹100 of ore)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: PSU -->
+    <div class="formula-panel blue-tab-panel" id="panel-psu">
+      <ul class="fsteps">
+        <li class="fstep">
+          <div class="fstep-num"><span>1</span></div>
+          <div class="fstep-content">
+            <h4>No auction required — block is directly allotted</h4>
+            <p>Central or State government designates a mineral block for a PSU without any competitive process. No e-auction is held, no bids are placed, and no auction premium is ever established for this mine.</p>
+            <span class="fstep-tag blue-tag">Auction Premium = Zero</span>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>2</span></div>
+          <div class="fstep-content">
+            <h4>Pay the same 15% statutory base royalty</h4>
+            <p>PSUs are not exempt from the base royalty. The same 15% of IBM benchmark value applies to every tonne mined — this is identical to what private companies pay on this component.</p>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>3</span></div>
+          <div class="fstep-content">
+            <h4>Pay the mandatory Additional Royalty — the levelling mechanism</h4>
+            <p>Because PSUs bypassed the auction, the law mandates an Additional Royalty equal to 150% of the base royalty. This is the government's mechanism to ensure PSUs cannot enjoy a completely free ride while private firms bleed in auctions.</p>
+            <span class="fstep-tag blue-tag">Additional Royalty = 150% × Base = 22.5% of ore value</span>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>4</span></div>
+          <div class="fstep-content">
+            <h4>Add DMF, NMET, and state cesses</h4>
+            <p>Same levy structure as private players — DMF at 30% of royalty, NMET at 2%, and applicable state cesses. These calculate off the base royalty, not the Additional Royalty.</p>
+          </div>
+        </li>
+      </ul>
+      <div class="formula-result-bar">
+        <div class="frb-text">
+          Monthly Payment =<br>
+          Qty × IBM Price × <strong>(0% premium + 15% royalty + 22.5% add'l royalty + ~3.8% levies)</strong><br>
+          ≈ <strong>~40% of ore's market value</strong> paid to government per tonne
+        </div>
+        <div class="frb-total">
+          <div class="frb-num">~40%</div>
+          <div class="frb-label">Total govt. take<br>(per ₹100 of ore)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: LMEL -->
+    <div class="formula-panel green-tab-panel" id="panel-lmel">
+      <ul class="fsteps">
+        <li class="fstep">
+          <div class="fstep-num"><span>1</span></div>
+          <div class="fstep-content">
+            <h4>Surjagarh was leased in 2007 — before the 2015 rules existed</h4>
+            <p>LMEL's lease predates the MMDR Amendment of 2015 by eight years. The legislation that mandated auctions and created the Additional Royalty for PSUs is explicitly not retroactive. Pre-existing leases are grandfathered in under their original terms.</p>
+            <span class="fstep-tag green-tag">Lease granted: 2007 · MMDR enacted: 2015</span>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>2</span></div>
+          <div class="fstep-content">
+            <h4>No auction premium — ever</h4>
+            <p>There was no auction when Surjagarh was granted. Therefore no premium % was ever attached to the lease. LMEL owes zero rupees in auction premiums for the entire life of this mine. This cannot be renegotiated or challenged under current law.</p>
+            <span class="fstep-tag green-tag">Auction Premium = 0% · Legally permanent</span>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>3</span></div>
+          <div class="fstep-content">
+            <h4>No Additional Royalty — that's a PSU mechanism, not applicable here</h4>
+            <p>The Additional Royalty was designed for post-2015 PSU reservation grants. LMEL is a private company whose lease predates the framework entirely. The mechanism simply does not apply.</p>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>4</span></div>
+          <div class="fstep-content">
+            <h4>Pay only the statutory base royalty (15%) and standard levies</h4>
+            <p>This is the absolute legal floor. Every miner in India pays this regardless of their circumstances. For LMEL, it is also the ceiling — there is nothing additional to pay above it.</p>
+          </div>
+        </li>
+        <li class="fstep">
+          <div class="fstep-num"><span>5</span></div>
+          <div class="fstep-content">
+            <h4>This structure holds until 2057</h4>
+            <p>Mining leases in India are typically granted for 50 years. The Surjagarh lease runs until 2057. Unless the law is changed with retroactive effect — which would be legally and politically extraordinary — LMEL's cost floor is fixed for over three more decades.</p>
+            <span class="fstep-tag green-tag">Locked until 2057 · ~33 years remaining</span>
+          </div>
+        </li>
+      </ul>
+      <div class="formula-result-bar">
+        <div class="frb-text">
+          Monthly Payment =<br>
+          Qty × IBM Price × <strong>(0% premium + 15% royalty + 0% add'l royalty + ~3.8% levies)</strong><br>
+          ≈ <strong>~20% of ore's market value</strong> — the statutory minimum, and LMEL's permanent ceiling
+        </div>
+        <div class="frb-total">
+          <div class="frb-num">~20%</div>
+          <div class="frb-label">Total govt. take<br>(per ₹100 of ore)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="fancy">
+
+<!-- TIMELINE -->
+<section class="timeline-section" id="timeline">
+  <div class="container">
+    <div class="section-label">05 — How We Got Here</div>
+    <div class="reveal">
+      <h2>The events that<br><em>shaped the hierarchy.</em></h2>
+      <p>The cost structure of Indian steel today is not an accident. It is the cumulative result of specific decisions made at specific moments in time.</p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-year">Pre-2015</div>
+        <h3>The Old Regime — First Come, First Served</h3>
+        <p>Mining leases in India were granted at the government's discretion — often without competitive processes. Companies could secure long-term leases through administrative allocations, frequently at minimal cost. There was no standardized auction mechanism.</p>
+        <span class="tl-tag gold">No market mechanism</span>
+      </div>
+
+      <div class="tl-item highlight reveal">
+        <div class="tl-year">2007</div>
+        <h3>LMEL Secures the Surjagarh Iron Ore Block</h3>
+        <p>Lloyds Metals &amp; Energy Ltd receives a mining lease for the Surjagarh deposit in Gadchiroli, Maharashtra — one of the largest high-grade iron ore blocks in central India. Under the rules of the time, no auction premium exists. They pay only the base statutory royalty.</p>
+        <span class="tl-tag green">The golden ticket is issued</span>
+      </div>
+
+      <div class="tl-item highlight reveal">
+        <div class="tl-year">2015</div>
+        <h3>MMDR Amendment — The Game Changes</h3>
+        <p>The Mines and Minerals (Development and Regulation) Amendment Act of 2015 mandates that all new mineral leases for specified minerals (including iron ore) must be granted through competitive electronic auctions. The Additional Royalty framework for PSUs is simultaneously introduced. Pre-existing leases are grandfathered in.</p>
+        <span class="tl-tag red">New era begins</span>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-year">2015–Present</div>
+        <h3>The Auction Bloodbath — Premiums Soar</h3>
+        <p>As auctions become the only legal route for new private mines, desperate steel companies begin bidding extraordinary premiums. Tata Steel bids 141.25% in one notable auction. JSW and others follow. The cost gap between legacy miners and new entrants becomes staggering.</p>
+        <span class="tl-tag red">Auction premiums exceed 100%</span>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-year">Present — 2057</div>
+        <h3>LMEL Operates Under Frozen Economics</h3>
+        <p>Surjagarh is now in active mining and steel production. LMEL's lease terms — established in 2007 — remain unchanged. The company pays approximately 20% of ore value to the government while competitors pay 40%–150%+. This advantage is not contingent on management decisions, commodity cycles, or policy changes. It is a legal fact.</p>
+        <span class="tl-tag green">Moat locked until 2057</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SUMMARY TABLE -->
+<section class="section table-section" id="table">
+  <div class="container">
+    <div class="section-label">06 — Summary Comparison</div>
+    <div class="reveal">
+      <h2>Who pays what,<br>and <em>why.</em></h2>
+    </div>
+
+    <div style="overflow-x: auto;">
+      <table class="summary-table reveal">
+        <thead>
+          <tr>
+            <th>Company / Category</th>
+            <th>Acquisition Route</th>
+            <th>Govt. Cost Burden</th>
+            <th>Auction Premium</th>
+            <th>Competitive Position</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="co-name">LMEL</div>
+              <span class="co-sub">Lloyds Metals &amp; Energy · Surjagarh</span>
+            </td>
+            <td>Pre-2015 Legacy Lease (2007)</td>
+            <td><span class="cost-chip green">~20% of ore value</span></td>
+            <td><span class="cost-chip green">0%</span></td>
+            <td class="verdict">Structural cost floor — cheapest in the industry by law</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="co-name">NMDC / SAIL</div>
+              <span class="co-sub">Government PSUs</span>
+            </td>
+            <td>Government Reservation</td>
+            <td><span class="cost-chip blue">~40% of ore value</span></td>
+            <td><span class="cost-chip blue">N/A (Additional Royalty instead)</span></td>
+            <td class="verdict">Middle tier — bypassed auctions but pay the Additional Royalty penalty</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="co-name">Tata Steel / JSW</div>
+              <span class="co-sub">Private Giants</span>
+            </td>
+            <td>Mandatory Competitive Auction</td>
+            <td><span class="cost-chip red">150%+ of ore value</span></td>
+            <td><span class="cost-chip red">100%–141%+ (won bids)</span></td>
+            <td class="verdict">Structurally disadvantaged — accept losses on mining to secure supply chain</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section class="conclusion-section" id="conclusion">
+  <div class="container">
+    <div class="section-label">07 — The Bottom Line</div>
+    <h2>LMEL holds a <em>legally guaranteed</em><br>cost moat until 2057.</h2>
+    <p class="lead">No management decision, no commodity supercycle, no competitor action can close this gap. It is not a competitive advantage that can be copied. It is an artifact of history, frozen into law.</p>
+
+    <div class="final-stats">
+      <div class="final-stat fs-green reveal">
+        <div class="fval">~20%</div>
+        <div class="flab">LMEL's total govt.<br>cost per tonne</div>
+      </div>
+      <div class="final-stat fs-blue reveal reveal-delay-1">
+        <div class="fval">~40%</div>
+        <div class="flab">PSU total govt.<br>cost per tonne</div>
+      </div>
+      <div class="final-stat fs-red reveal reveal-delay-2">
+        <div class="fval">150%+</div>
+        <div class="flab">Private auction<br>winner cost</div>
+      </div>
+      <div class="final-stat fs-gold reveal reveal-delay-3">
+        <div class="fval">2057</div>
+        <div class="flab">LMEL's Surjagarh<br>lease expiry</div>
+      </div>
+    </div>
+
+    <div class="conclusion-quote reveal">
+      <p>LMEL can produce a tonne of steel at a <strong>dramatically lower raw material cost</strong> than any government PSU, and at a <strong>fraction of the cost</strong> of a private giant relying on auctioned mines. The reason has nothing to do with operational excellence — and everything to do with a lease signed in 2007, before the rules existed that would have made it cost 7× as much.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="inner">
+    <span class="f-brand">India Steel · Mining Cost Hierarchy · MMDR 2015</span>
+    <span class="f-note">For informational and educational purposes only.</span>
+  </div>
+</footer>
+
+<!-- SCROLL REVEAL JS -->
+<script>
+  // Intersection Observer for reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Animate cost bars when tier cards become visible
+        const fills = entry.target.querySelectorAll('.cost-fill, .c-fill');
+        fills.forEach(f => {
+          setTimeout(() => f.classList.add('animate'), 200);
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Also trigger bar animations when tier cards become visible
+  const tierCards = document.querySelectorAll('.tier-card');
+  const tierObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fill = entry.target.querySelector('.cost-fill');
+        if (fill) setTimeout(() => fill.classList.add('animate'), 300);
+        tierObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  tierCards.forEach(el => tierObserver.observe(el));
+
+  // Tab switching for formula section
+  function switchTab(id, btn) {
+    // Hide all panels
+    document.querySelectorAll('.formula-panel').forEach(p => p.classList.remove('active'));
+    // Deactivate all buttons
+    document.querySelectorAll('.ftab-btn').forEach(b => b.classList.remove('active'));
+    // Show selected panel
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  const cFills = document.querySelectorAll('.c-fill');
+  const chartObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('animate'), 300);
+        chartObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  cFills.forEach(el => chartObserver.observe(el));
+</script>
+
+</body>
+</html>
